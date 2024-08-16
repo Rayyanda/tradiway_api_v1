@@ -1,8 +1,12 @@
 <?php
 
-use App\Http\Controllers\Api\CustomerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\Api\PlantController;
+use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\RegisterController;
+use App\Http\Controllers\Api\HerbalDrinkController;
 
 
 /**
@@ -35,7 +39,9 @@ Route::middleware('auth:api')->group(function () {
     
 });
 
-Route::apiResource('/plant',\App\Http\Controllers\Api\PlantController::class);
+Route::apiResource('/plant',PlantController::class);
+
+Route::get('/drinks',[HerbalDrinkController::class,'index']);
 
 /**
  * route "/logout"

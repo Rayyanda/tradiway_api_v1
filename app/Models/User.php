@@ -3,11 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -71,5 +72,16 @@ class User extends Authenticatable implements JWTSubject
     public function customer():HasOne
     {
         return $this->hasOne(Customer::class,'user_id','user_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function($model){
+            if(empty($model->user_id) || empty($model->role)){
+                $model->user_id = (string) Str::uuid();
+                $model->role = (string) "admin";
+            }
+        });
     }
 }
