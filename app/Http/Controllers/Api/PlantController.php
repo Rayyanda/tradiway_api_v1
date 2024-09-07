@@ -16,7 +16,9 @@ class PlantController extends Controller
     {
         $plants = Plant::all();
 
-        return new PlantResource(true,'Plant data',$plants);
+        return new PlantResource(true,'Plant data',[
+            'plants' => $plants
+        ]);
     }
 
     /**
@@ -56,5 +58,14 @@ class PlantController extends Controller
         ]);
 
         return new PlantResource(true,'Data stored',$plant);
+    }
+
+    public function show($id)
+    {
+        $plant = Plant::where('slug','=',$id)->first();
+        return new PlantResource(true, 'plant',[
+            'plant' => $plant,
+            // 'drinks' => $plant->herbalDrink
+        ]);
     }
 }

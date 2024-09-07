@@ -42,6 +42,7 @@ Route::middleware('auth:api')->group(function () {
 Route::apiResource('/plant',PlantController::class);
 
 Route::get('/drinks',[HerbalDrinkController::class,'index']);
+Route::get('/drinks/{id}',[HerbalDrinkController::class,'show']);
 
 /**
  * route "/logout"

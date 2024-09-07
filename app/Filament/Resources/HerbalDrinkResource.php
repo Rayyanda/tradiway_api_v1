@@ -13,11 +13,12 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Models\Plant;
 
 class HerbalDrinkResource extends Resource
 {
     protected static ?string $model = HerbalDrink::class;
-
+    // public HerbalDrink $herbalDrink;
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
@@ -37,9 +38,14 @@ class HerbalDrinkResource extends Resource
                 Forms\Components\Textarea::make('benefits')
                     ->required(),
                 Forms\Components\TextInput::make('category')
-                    ->nullable()
+                    ->nullable(),
+                // Forms\Components\Select::make('ingredient')
+                //     ->required()
+                //     ->multiple()
+                //     ->options(Plant::all()->pluck('name','id'))
             ])
-            ->columns(1);
+            ->columns(1)
+            ->model(HerbalDrink::class);
     }
 
     public static function table(Table $table): Table
@@ -51,6 +57,8 @@ class HerbalDrinkResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('benefits')
+                    ->searchable(),              
             ])
             ->filters([
                 //

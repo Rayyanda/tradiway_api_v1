@@ -12,6 +12,26 @@ class HerbalDrinkController extends Controller
     //
     public function index()
     {
-        return new HerbalDrinkResource(true,'Drinks',HerbalDrink::all());
+        $herbalDrinks = HerbalDrink::all();
+        //$ingre = $herbalDrinks->ingredient;
+        return new HerbalDrinkResource(true,'Drinks',[
+            'drinks' => $herbalDrinks,
+        ]);
+    }
+    
+
+    public function show($id)
+    {
+        $herbaldrink = HerbalDrink::find($id)->first();
+        $resource = $herbaldrink->herbal_plants;
+        
+        return new HerbalDrinkResource(
+            true,
+            'drinks',
+            [
+                'drink' => $herbaldrink,
+                'plants' => $resource
+            ]
+        );
     }
 }

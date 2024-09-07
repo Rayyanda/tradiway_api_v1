@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('herbal_drinks', function (Blueprint $table) {
+        Schema::create('herbal_plants', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug');
-            $table->text('description');
-            $table->string('image');
-            $table->text('benefits');
-            $table->string('category')->nullable();
-            //$table->json('ingredient')->nullable();
+            $table->foreignId('drink_id')->constrained('herbal_drinks')->cascadeOnDelete();
+            $table->foreignId('plant_id')->constrained('plants')->cascadeOnDelete();
+            $table->string('measurement');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('herbal_drinks');
+        Schema::dropIfExists('herbal_plants');
     }
 };
