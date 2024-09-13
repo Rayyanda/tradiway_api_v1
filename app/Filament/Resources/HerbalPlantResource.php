@@ -17,7 +17,7 @@ class HerbalPlantResource extends Resource
 {
     protected static ?string $model = HerbalPlant::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-window';
 
     public static function form(Form $form): Form
     {

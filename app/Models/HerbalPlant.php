@@ -17,13 +17,13 @@ class HerbalPlant extends Model
         'measurement'
     ];
 
-    public function drinks():BelongsTo
+    public function drinks():HasMany
     {
-        return $this->belongsTo(HerbalDrink::class,'drink_id','id');
+        return $this->hasMany(HerbalDrink::class,'id','drink_id');
     }
 
     public function plants()
     {
-        return $this->belongsTo(Plant::class,'plant_id','id');
+        return $this->hasMany(Plant::class,'id',  'plant_id');
     }
 }

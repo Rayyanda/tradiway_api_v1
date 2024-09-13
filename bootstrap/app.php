@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\JwtFromCookie;
 use App\Http\Middleware\RoleCheck;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         //
         $middleware->alias([
             'role' => RoleCheck::class,
+            'jwt.cookie' => JwtFromCookie::class,
+        ]);
+        $middleware->api([
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            //'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

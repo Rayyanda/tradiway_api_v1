@@ -63,6 +63,7 @@ class PlantController extends Controller
     public function show($id)
     {
         $plant = Plant::where('slug','=',$id)->first();
+        $plant->herbal_plant_through;
         return new PlantResource(true, 'plant',[
             'plant' => $plant,
             // 'drinks' => $plant->herbalDrink

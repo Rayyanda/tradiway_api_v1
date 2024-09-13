@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class HerbalDrink extends Model
@@ -38,7 +37,7 @@ class HerbalDrink extends Model
     //     'ingredient' => 'array'
     // ];
 
-    public function herbal_plant_through()
+    public function composition():HasManyThrough
     {
         return $this->through('herbal_plant')->has('plants');
     }
@@ -48,9 +47,9 @@ class HerbalDrink extends Model
         return $this->hasMany(HerbalPlant::class, 'drink_id','id');
     }
 
-    public function plant():HasMany
+    public function plant():BelongsTo
     {
-        return $this->hasMany(Plant::class,'id','id');
+        return $this->belongsTo(Plant::class);
     }
 
 }

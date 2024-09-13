@@ -58,6 +58,11 @@ class Plant extends Model
 
     public function herbal_plant():HasMany
     {
-        return $this->hasMany(HerbalPlant::class,'plant_id','id');
+        return $this->hasMany(HerbalPlant::class,'');
+    }
+
+    public function drinks():BelongsTo
+    {
+        return $this->belongsTo(HerbalPlant::class, 'plant_id','id');
     }
 }
