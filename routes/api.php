@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\HerbalPlantController;
 use Illuminate\Http\Request;
+use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PlantController;
 use App\Http\Controllers\Api\CustomerController;
@@ -9,25 +11,37 @@ use App\Http\Controllers\Api\HerbalDrinkController;
 use App\Http\Controllers\Api\LoginController;
 
 
-/**
- * route "/register"
- * @method "POST"
- */
-Route::post('/register', App\Http\Controllers\Api\RegisterController::class)->name('register');
+Route::middleware('api')->group(function(){
 
+    /**
+     * route "/register"
+     * @method "POST"
+     */
+    //Route::post('/register', App\Http\Controllers\Api\RegisterController::class)->name('register');
+    Route::post('/register',[AuthController::class,'register'])->name('register');
+    
+    /**
+     * route "/user"
+     * @method "GET"
+     */
+    // Route::middleware(['jwt.cookie','auth:api'])->get('/user', function (Request $request) {
+        //     return $request->user();
+        // });
+        Route::get('/user',[AuthController::class,'user'])->name('user')->middleware('auth:sanctum');
+        
+});
+    /**
+     * route "/login"
+     * @method "POST"
+     */
+    //Route::post('/login', App\Http\Controllers\Api\LoginController::class)->name('login');
+    Route::post('/login',[AuthController::class,'login'])->name('login')->middleware(['throttle:login',StartSession::class,'web']);
 /**
- * route "/login"
+ * route "/logout"
  * @method "POST"
  */
-//Route::post('/login', App\Http\Controllers\Api\LoginController::class)->name('login');
-Route::post('/login',[LoginController::class,'login'])->name('login');
-/**
- * route "/user"
- * @method "GET"
- */
-Route::middleware(['jwt.cookie','auth:api'])->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('logout');
+Route::post('/logout',[AuthController::class,'logout'])->name('logout')->middleware('auth:sanctum');
 
 /**
  * route "/customer"
@@ -47,13 +61,6 @@ Route::apiResource('/receipt', HerbalPlantController::class);
 Route::get('/receipt/drinks/{drink_id}',[HerbalPlantController::class,'getByDrinks']);
 Route::get('/receipt/plants/{plant_id}',[HerbalPlantController::class,'getByPlants']);
 
-/**
- * route "/logout"
- * @method "POST"
- */
-Route::middleware('jwt.cookie')->group(function(){
-});
-Route::post('/logout', App\Http\Controllers\Api\LogoutController::class)->name('logout');
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
