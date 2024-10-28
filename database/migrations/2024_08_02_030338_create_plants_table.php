@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('latin_name')->nullable();
             $table->text('description');
             $table->string('image_url');
-            $table->string('benefits');
+            //$table->string('benefits');
             $table->string('category')->nullable();
             $table->text('content')->nullable();
             $table->timestamps();

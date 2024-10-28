@@ -21,7 +21,7 @@ class HerbalPlantController extends Controller
         $composition = HerbalPlant::where('drink_id','=',$drink_id)->get();
         foreach ($composition as $key) {
             # code...
-          $key->plants;
+            $key->plants; 
         }
         return new HerbalPlantResource(true,'Herbal Plants',[
             'herbal_plants'=>$composition,
@@ -33,7 +33,7 @@ class HerbalPlantController extends Controller
         $drinks = HerbalPlant::where('plant_id','=',$plant_id)->get();
         foreach($drinks as $key)
         {
-            $key->drinks;
+            $key->drink;
         }
         return new HerbalPlantResource(true,'Herbal Plants',[
             'herbal_drinks' => $drinks
